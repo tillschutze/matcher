@@ -4,7 +4,7 @@ from typing import List
 import random
 
 class Deck:
-    def __init__(self, colors: List[Color]):
+    def __init__(self, colors: List[Color], origin=(50, 50)):
         self.colors = colors
         self.cards: List[Card] = self.create_deck()
         self.shuffle()

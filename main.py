@@ -34,17 +34,13 @@ if __name__ == '__main__':
                 if clicked_cell is  None:
                     continue
                 else:  
-                    game.handle_swap(clicked_cell)
+                    game.handle_swap(clicked_cell, screen)                  
 
                 
-                
-         
-
         # Clear the screen.
         screen.fill((30, 30, 30))  # A dark background.
         # --- Draw the Main Board ---
         game.draw(screen)
-
         # --- Draw the Deck ---
         # We'll display a single "card back" rectangle representing the deck,
         # along with the number of cards remaining.

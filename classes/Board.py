@@ -1,5 +1,5 @@
 from classes.Colors import Color, COLOR_NAMES, color_to_rgb
-from classes.Cell import Cell
+from classes.Cell import MainBoardCell
 import random
 import numpy as np
 import pygame
@@ -13,7 +13,7 @@ class Board:
         self.cols = dimension
         self.origin = origin
         self.cell_size = cell_size
-        self.cells: List[Cell] = []
+        self.cells: List[MainBoardCell] = []
         self.create_main_board()
     
     def create_main_board(self):
@@ -42,21 +42,23 @@ class Board:
                 )
                 cell_color_enum = Color(self.board[row][col])
                 cell_color = color_to_rgb[cell_color_enum]
-                cell = Cell(cell_rect, cell_color, row, col)
+                cell = MainBoardCell(cell_rect, cell_color, row, col)
                 self.cells.append(cell)
             
             
     def draw_board(self, screen):
         for cell in self.cells:
             pygame.draw.rect(screen, cell.color, cell.rect)
-            pygame.draw.rect(screen, (0, 0, 0), cell.rect, 2)
+            pygame.draw.rect(screen, cell.highlight_color, cell.rect, 3)
             
-    def find_clicked_cell(self, pos) -> Optional[Cell]:
+    def find_clicked_cell(self, pos) -> Optional[MainBoardCell]:
         for cell in self.cells:
             if cell.rect.collidepoint(pos):
                 return cell
         return None
     
+    def toggle_highlight(self, screen, cell: MainBoardCell, highlight: bool):
+        cell.highlight_color = (255, 0, 255) if highlight else (0, 0, 0) 
 
     def __repr__(self):
         board_str = "Main Board:\n"
