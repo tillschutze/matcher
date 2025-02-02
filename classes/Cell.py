@@ -1,5 +1,6 @@
 import pygame
 from classes.Card import Card
+from typing import TypeVar
 
 
 class Cell: 
@@ -18,10 +19,12 @@ class MainBoardCell(Cell):
         self.highlight_color = (0, 0, 0)
         
 class  PlayerBoardCell(Cell):
-    def __init__(self, rect, row, col, action, card: Card, strength: int): 
+    def __init__(self, rect, row, col, action: str, card: Card, strength: int): 
         super().__init__(rect, row, col)
         self.card = card
         self.action = action
         self.strength = strength
+        
+CellType = TypeVar('CellType', bound=Cell)
 
  

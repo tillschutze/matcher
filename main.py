@@ -36,25 +36,7 @@ if __name__ == '__main__':
         screen.fill((30, 30, 30))  # A dark background.
         # --- Draw the Main Board ---
         game.draw(screen)
-        # --- Draw the Deck ---
-        # We'll display a single "card back" rectangle representing the deck,
-        # along with the number of cards remaining.
-        deck_origin = (400, 50)      # Position of the deck on the screen.
-        deck_card_width = 60
-        deck_card_height = 80
         
-        # Define a rectangle for the deck's card back.
-        deck_rect = pygame.Rect(deck_origin[0], deck_origin[1], deck_card_width, deck_card_height)
-        pygame.draw.rect(screen, (200, 200, 200), deck_rect)  # A light gray color for the back.
-        pygame.draw.rect(screen, (0, 0, 0), deck_rect, 2)       # Black border.
-
-        # Render the deck count (number of cards left).
-        font = pygame.font.Font(None, 36)
-        deck_count_text = font.render(str(len(game.deck.cards)), True, (255, 255, 255))
-        # Position the text to the right of the deck card.
-        text_pos = (deck_origin[0] + deck_card_width + 10, deck_origin[1] + deck_card_height // 2 - 18)
-        screen.blit(deck_count_text, text_pos)
-
         # Update the display.
         pygame.display.flip()
         # Cap the framerate.

@@ -1,4 +1,4 @@
-from classes.Board import MainBoard
+from classes.Board import MainBoard, PlayerBoard
 from classes.Deck import Deck
 from classes.ActionButton import ActionButton
 from classes.Cell import Cell
@@ -10,6 +10,7 @@ class Game:
         self.screen: pygame.Surface = screen
         self.board: MainBoard = MainBoard(dimension, colors)
         self.deck: Deck = Deck(colors)
+        self.playerBoard: PlayerBoard = PlayerBoard(dimension, self.deck)
         self.swapButton: ActionButton = ActionButton((50, 500, 150, 50), "Swap", self.start_swap)
         self.is_swapping: bool = False
         self.swapState: Optional[Dict] = None
@@ -17,6 +18,7 @@ class Game:
         
     def draw(self, screen):
         self.board.draw_board(screen)
+        self.playerBoard.draw_board(screen)
         self.swapButton.draw(screen)
         
     def start_swap(self):

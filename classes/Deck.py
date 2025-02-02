@@ -1,12 +1,13 @@
 from classes.Card import Card
 from classes.Colors import Color
-from typing import List
+from typing import List, Optional
 import random
 
 class Deck:
     def __init__(self, colors: List[Color], origin=(50, 50)):
         self.colors = colors
         self.cards: List[Card] = self.create_deck()
+        self.draw_pile = self.cards
         self.shuffle()
         
     def __repr__(self):
@@ -47,8 +48,13 @@ class Deck:
                             pattern_list = [list(canonical[0]), list(canonical[1])]
                             all_patterns.append(pattern_list)
         return all_patterns
-
             
     def shuffle(self):
         random.shuffle(self.cards)
+        
+    def draw(self) -> Optional[Card]:
+        if len(self.draw_pile) == 0:
+            print("Deck is empty!")
+            return None
+        return self.draw_pile.pop()
     
