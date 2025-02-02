@@ -42,7 +42,7 @@ class Board:
                 )
                 cell_color_enum = Color(self.board[row][col])
                 cell_color = color_to_rgb[cell_color_enum]
-                cell = Cell(cell_rect, cell_color)
+                cell = Cell(cell_rect, cell_color, row, col)
                 self.cells.append(cell)
             
             
