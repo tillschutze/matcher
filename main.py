@@ -17,8 +17,6 @@ if __name__ == '__main__':
     
     colors = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW]
     game = Game(screen, colors, 4)
-    # Create buttons for actions.
-    swapButton = ActionButton((50, 500, 150, 50), "Action 1", swap)
     # Set up a clock to control the framerate.
     clock = pygame.time.Clock()
 
@@ -30,6 +28,15 @@ if __name__ == '__main__':
                 running = False
             
             game.swapButton.handle_event(event)
+            
+            if game.is_swapping and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                clicked_cell = game.board.find_clicked_cell(event.pos)
+                if clicked_cell is  None:
+                    continue
+                else:  
+                    game.handle_swap(clicked_cell)
+
+                
                 
          
 
