@@ -1,15 +1,17 @@
-from classes.Board import Board
+from classes.Board import MainBoard
 from classes.Deck import Deck
 from classes.ActionButton import ActionButton
 from classes.Cell import Cell
 from typing import Dict, Optional
+import pygame
 
 class Game:
     def __init__(self, screen, colors, dimension):
-        self.board = Board(dimension, colors)
-        self.deck = Deck(colors)
-        self.swapButton = ActionButton((50, 500, 150, 50), "Swap", self.start_swap)
-        self.is_swapping = False
+        self.screen: pygame.Surface = screen
+        self.board: MainBoard = MainBoard(dimension, colors)
+        self.deck: Deck = Deck(colors)
+        self.swapButton: ActionButton = ActionButton((50, 500, 150, 50), "Swap", self.start_swap)
+        self.is_swapping: bool = False
         self.swapState: Optional[Dict] = None
         
         

@@ -29,8 +29,6 @@ class Board:
         self.board = np.array(stones).reshape(self.rows, self.cols)
         self.create_cells()
     
-    
-    
     def create_cells(self):
         for row in range(self.rows):
             for col in range(self.cols):
@@ -44,8 +42,7 @@ class Board:
                 cell_color = color_to_rgb[cell_color_enum]
                 cell = MainBoardCell(cell_rect, cell_color, row, col)
                 self.cells.append(cell)
-            
-            
+             
     def draw_board(self, screen):
         for cell in self.cells:
             pygame.draw.rect(screen, cell.color, cell.rect)
@@ -60,8 +57,14 @@ class Board:
     def toggle_highlight(self, screen, cell: MainBoardCell, highlight: bool):
         cell.highlight_color = (255, 0, 255) if highlight else (0, 0, 0) 
 
-    def __repr__(self):
-        board_str = "Main Board:\n"
-        for row in self.board:
-            board_str += " | ".join(COLOR_NAMES[val] for val in row) + "\n"
-        return board_str
+    
+class MainBoard(Board):
+    def __init__(self, dimension, colors: Color, origin=(50, 50), cell_size=50):
+        super().__init__(dimension, colors, origin, cell_size)
+        
+class PlayerBoard(Board):
+    def __init__(self, dimension, colors: Color, origin=(50, 50), cell_size=50):
+        super().__init__(dimension, colors, origin, cell_size)
+        
+    def create_player_board(self):
+        pass

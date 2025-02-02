@@ -1,10 +1,5 @@
 from classes.Colors import Color
-from classes.Card import Card
-from classes.Deck import Deck
-from classes.Board import Board
-from classes.ActionButton import ActionButton
 from classes.Game import Game
-from actions.swap import swap
 import pygame
 
 
@@ -12,7 +7,7 @@ if __name__ == '__main__':
     # Initialize Pygame.
     pygame.init()
     screen_width, screen_height = 800, 600
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    screen: pygame.Surface = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Board Game Prototype")
     
     colors = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW]
