@@ -12,3 +12,10 @@ COLOR_NAMES = {
     2: "green",
     3: "yellow"
 }
+
+color_to_rgb = {
+        Color.RED: (255, 0, 0),
+        Color.BLUE: (0, 0, 255),
+        Color.GREEN: (0, 255, 0),
+        Color.YELLOW: (255, 255, 0)
+    }
