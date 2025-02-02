@@ -21,6 +21,8 @@ class Board:
         board = np.array(stones).reshape(self.dimension, self.dimension)
         return board
     
-    def print_board(self):
+    def __repr__(self):
+        board_str = "Main Board:\n"
         for row in self.board:
-            print(" | ".join(COLOR_NAMES[val] for val in row))
+            board_str += " | ".join(COLOR_NAMES[val] for val in row) + "\n"
+        return board_str

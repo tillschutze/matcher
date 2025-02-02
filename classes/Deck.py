@@ -10,7 +10,7 @@ class Deck:
         self.shuffle()
         
     def __repr__(self):
-        return f"Deck(colors={self.colors}, cards={self.cards}) \n"
+        return f"Deck(cards={self.cards}) \n"
         
     def create_deck(self) -> List[Card]:
         cards: List[Card] = []
@@ -43,7 +43,6 @@ class Deck:
                         canonical = min(rotations)
                         if canonical not in seen:
                             seen.add(canonical)
-                            print(canonical)
                             # Convert canonical pattern to a list-of-lists format.
                             pattern_list = [list(canonical[0]), list(canonical[1])]
                             all_patterns.append(pattern_list)
@@ -53,5 +52,3 @@ class Deck:
     def shuffle(self):
         random.shuffle(self.cards)
     
-    def deal(self):
-        pass
