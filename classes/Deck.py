@@ -1,5 +1,5 @@
-from Card import Card
-from Colors import Color
+from classes.Card import Card
+from classes.Colors import Color
 from typing import List
 import random
 

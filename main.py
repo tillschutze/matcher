@@ -1,7 +1,7 @@
-from Colors import Color
-from Card import Card
-from Deck import Deck
-from Board import Board
+from classes.Colors import Color
+from classes.Card import Card
+from classes.Deck import Deck
+from classes.Board import Board
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from Colors import Color, COLOR_NAMES
+from classes.Colors import Color, COLOR_NAMES
 from typing import List
 
 class Card: 
