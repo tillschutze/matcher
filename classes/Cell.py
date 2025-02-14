@@ -24,6 +24,10 @@ class  PlayerBoardCell(Cell):
         self.card = card
         self.action = action
         self.strength = strength
+
+    def rotate_card(self, screen):
+        self.card.rotate(screen, self.rect.x, self.rect.y)
+
         
 CellType = TypeVar('CellType', bound=Cell)
 

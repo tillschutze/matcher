@@ -15,6 +15,7 @@ class Board(Generic[CellType]):
         self.origin = origin
         self.cell_size = cell_size
         self.cells: List[CellType] = []
+        self.board = None
         self.create_board()
        
     def create_board(self):
@@ -35,7 +36,7 @@ class Board(Generic[CellType]):
                 cell = self.create_cell(cell_rect, row, col)
                 self.cells.append(cell)
                 
-    def create_cell(self):
+    def create_cell(self, rect, row, col) -> CellType:
         pass        
     
     def find_clicked_cell(self, pos) -> Optional[CellType]:
@@ -46,7 +47,7 @@ class Board(Generic[CellType]):
     
 
 class MainBoard(Board[MainBoardCell]):
-    def __init__(self, dimension, colors: Color, origin=(50, 50), cell_size=50):
+    def __init__(self, dimension, colors: List[Color], origin=(50, 50), cell_size=50):
         self.colors = colors
         super().__init__(dimension, origin, cell_size)
         

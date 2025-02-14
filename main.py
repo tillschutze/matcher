@@ -1,3 +1,6 @@
+from typing import Optional
+
+from classes.Cell import PlayerBoardCell
 from classes.Colors import Color
 from classes.Game import Game
 import pygame
@@ -29,7 +32,15 @@ if __name__ == '__main__':
                 if clicked_cell is None:
                     continue
                 else:  
-                    game.handle_swap(clicked_cell, screen)                  
+                    game.handle_swap(clicked_cell, screen)
+
+            # rotate a card by 90°
+            if not game.is_swapping and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                if clicked_cell is None:
+                    continue
+                else:
+                    clicked_cell.rotate_card(game.screen)
 
                 
         # Clear the screen.
