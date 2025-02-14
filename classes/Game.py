@@ -89,6 +89,10 @@ class Game:
             if not cell.card or not cell.card.isFaceUp:
                 continue
 
+            if cell.col > 0 and  self.playerBoard.board[cell.row][cell.col -1].card:
+                print("neighbor has a card still")
+                continue
+
 
             pattern = cell.card.pattern
             rotations: List[Pattern] = [

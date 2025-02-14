@@ -10,13 +10,16 @@ class Cell:
         self.col = col
         
     def __repr__(self):
-        return f"Cell(rect={self.rect.x},{self.rect.y})"
+        return f"Cell({self.row},{self.col} rect={self.rect.x},{self.rect.y})"
     
 class MainBoardCell(Cell):
     def __init__(self, rect, color, row, col): 
         super().__init__(rect, row, col)
         self.color = color
         self.highlight_color = (0, 0, 0)
+
+    def __repr__(self):
+        return f"Cell({self.row},{self.col} color={self.color})"
         
 class  PlayerBoardCell(Cell):
     def __init__(self, rect, row, col, action: str, card: Card, strength: int): 
@@ -28,6 +31,9 @@ class  PlayerBoardCell(Cell):
     def rotate_card(self, screen):
         if self.card:
             self.card.rotate(screen, self.rect.x, self.rect.y)
+
+    def __repr__(self):
+        return f"Cell({self.row},{self.col} card={self.card.pattern})"
 
         
 CellType = TypeVar('CellType', bound=Cell)

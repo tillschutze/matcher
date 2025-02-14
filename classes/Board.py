@@ -19,6 +19,7 @@ class Board(Generic[CellType]):
         self.cells: List[CellType] = []
         self.board = None
         self.patterns: List[Pattern] = []
+        self.board = np.empty((4, 4), dtype=object)
         self.create_board()
        
     def create_board(self):
@@ -37,6 +38,7 @@ class Board(Generic[CellType]):
                     self.cell_size
                 )
                 cell = self.create_cell(cell_rect, row, col)
+                self.board[row, col] = cell
                 self.cells.append(cell)
                 
     def create_cell(self, rect, row, col) -> CellType:
@@ -52,19 +54,18 @@ class Board(Generic[CellType]):
 class MainBoard(Board[MainBoardCell]):
     def __init__(self, dimension, colors: List[Color], origin=(50, 50), cell_size=50):
         self.colors = colors
+        self.stones = []
         super().__init__(dimension, origin, cell_size)
         self.generate_pattern_list()
         
     def create_board(self):
-        stones = []
         for color in self.colors:
-            stones.extend([color.value] * self.dimension)
-        random.shuffle(stones)
-        self.board = np.array(stones).reshape(self.rows, self.cols)
+            self.stones.extend([color.value] * self.dimension)
+        random.shuffle(self.stones)
         self.create_cells()
-        
+
     def create_cell(self, rect, row, col) -> MainBoardCell:
-        cell_color_enum: Color = Color(self.board[row][col])
+        cell_color_enum: Color = Color(self.stones.pop())
         cell_color = color_to_rgb[cell_color_enum]
         return MainBoardCell(rect, cell_color, row, col)
           
@@ -97,11 +98,10 @@ class PlayerBoard(Board[PlayerBoardCell]):
     def __init__(self, dimension, deck: Deck, origin=(300, 50), cell_size=80):
         self.deck = deck
         super().__init__(dimension, origin, cell_size)
-        self.board = np.empty((4, 4), dtype=object)
-        
+
     def create_board(self):
         self.create_cells()
-        
+
     def create_cell(self, rect, row, col) -> PlayerBoardCell:
         return PlayerBoardCell(rect, row, col, 'swap', self.deck.draw(), 1)
     
