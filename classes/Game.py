@@ -49,6 +49,7 @@ class Game:
                 print(f"Swapped cell at ({source.row}, {source.col}) with cell at ({target.row}, {target.col}).")
                 for cell in self.swapState["adjacent"]:
                     self.board.toggle_highlight(screen, cell, False)
+                self.board.generate_pattern_list()
             else:
                 print("Invalid target cell. Swap cancelled.")
             # Reset swap mode regardless of whether swap was successful.

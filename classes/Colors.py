@@ -19,3 +19,5 @@ color_to_rgb = {
         Color.GREEN: (0, 255, 0),
         Color.YELLOW: (255, 255, 0)
     }
+
+rgb_to_color = {v: k for k, v in color_to_rgb.items()}
