@@ -1,4 +1,5 @@
 import pygame
+from utils.PygameUtils import draw_rect
 
 
 class ActionButton:
@@ -15,8 +16,8 @@ class ActionButton:
     
     def draw(self, surface):
         # Draw the button rectangle.
-        pygame.draw.rect(surface, (200, 200, 200), self.rect)
-        pygame.draw.rect(surface, (0, 0, 0), self.rect, 2)
+        draw_rect(surface, (200, 200, 200), self.rect)
+        draw_rect(surface, (0, 0, 0), self.rect, 2)
         
         # Render the text and center it in the button.
         text_surf = self.font.render(self.text, True, (0, 0, 0))

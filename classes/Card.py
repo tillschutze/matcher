@@ -1,6 +1,6 @@
 from classes.Colors import Color, COLOR_NAMES
 from typing import List
-import pygame
+from utils.PygameUtils import draw_rect
 
 class Card: 
     def __init__(self, pattern: List[List[Color]],  points: int = 2, orientation: str = "base", isFaceUp: bool = False, width: int = 40, height: int = 40):
@@ -18,11 +18,11 @@ class Card:
         if self.isFaceUp:
             for i in range(2):
                 for j in range(2):
-                    pygame.draw.rect(screen, COLOR_NAMES[self.pattern[i][j]], (x + i * self.width, y + j * self.height, self.width, self.height))
-                    pygame.draw.rect(screen, (0, 0, 0), (x + i * self.width, y + j * self.height, self.width, self.height), 1)
+                    draw_rect(screen, COLOR_NAMES[self.pattern[i][j]], (x + i * self.width, y + j * self.height, self.width, self.height))
+                    draw_rect(screen, (0, 0, 0), (x + i * self.width, y + j * self.height, self.width, self.height), 1)
         else:
-            pygame.draw.rect(screen, (255, 0, 255), (x, y, self.width * 2, self.height * 2))
-        pygame.draw.rect(screen, (0, 0, 0), (x, y, self.width * 2, self.height * 2), 3)
+            draw_rect(screen, (255, 0, 255), (x, y, self.width * 2, self.height * 2))
+        draw_rect(screen, (0, 0, 0), (x, y, self.width * 2, self.height * 2), 3)
       
     def flip(self):
         self.isFaceUp = not self.isFaceUp

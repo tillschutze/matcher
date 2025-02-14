@@ -26,7 +26,7 @@ if __name__ == '__main__':
             
             if game.is_swapping and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 clicked_cell = game.board.find_clicked_cell(event.pos)
-                if clicked_cell is  None:
+                if clicked_cell is None:
                     continue
                 else:  
                     game.handle_swap(clicked_cell, screen)                  

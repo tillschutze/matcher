@@ -1,6 +1,7 @@
 from classes.Colors import Color, COLOR_NAMES, color_to_rgb
 from classes.Cell import MainBoardCell, Cell, PlayerBoardCell, CellType
 from classes.Deck import Deck
+from utils.PygameUtils import draw_rect
 import random
 import numpy as np
 import pygame
@@ -64,9 +65,9 @@ class MainBoard(Board[MainBoardCell]):
           
     def draw_board(self, screen):
         for cell in self.cells:
-            pygame.draw.rect(screen, cell.color, cell.rect)
-            pygame.draw.rect(screen, cell.highlight_color, cell.rect, 3)
-                  
+            draw_rect(screen, cell.color, cell.rect)
+            draw_rect(screen, cell.highlight_color, cell.rect, 3)
+
     def toggle_highlight(self, screen, cell: MainBoardCell, highlight: bool):
         cell.highlight_color = (255, 0, 255) if highlight else (0, 0, 0) 
         
