@@ -28,6 +28,7 @@ if __name__ == '__main__':
             game.swapButton.handle_event(event)
             game.revealButton.handle_event(event)
             game.resolveButton.handle_event(event)
+            game.cardSwapButton.handle_event(event)
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if game.is_swapping_stones:
@@ -48,6 +49,12 @@ if __name__ == '__main__':
                         continue
                     else:
                         game.handle_resolving_card(clicked_cell)
+                elif game.is_swapping_cards:
+                    clicked_cell: Optional[PlayerBoardCell] = game.active_player.player_board.find_clicked_cell(event.pos)
+                    if clicked_cell is None:
+                        continue
+                    else:
+                        game.handle_swapping_cards(clicked_cell)
                 else:
                     clicked_cell: Optional[PlayerBoardCell] = game.active_player.player_board.find_clicked_cell(event.pos)
                     if clicked_cell is None:

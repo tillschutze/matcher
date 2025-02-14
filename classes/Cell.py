@@ -6,8 +6,8 @@ from typing import TypeVar, Optional
 class Cell: 
     def __init__(self, rect: pygame.Rect, row, col):
         self.rect: pygame.rect = rect
-        self.row = row
-        self.col = col
+        self.row: int = row
+        self.col: int = col
         
     def __repr__(self):
         return f"Cell({self.row},{self.col} rect={self.rect.x},{self.rect.y})"
