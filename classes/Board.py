@@ -97,6 +97,7 @@ class PlayerBoard(Board[PlayerBoardCell]):
     def __init__(self, dimension, deck: Deck, origin=(300, 50), cell_size=80):
         self.deck = deck
         super().__init__(dimension, origin, cell_size)
+        self.board = np.empty((4, 4), dtype=object)
         
     def create_board(self):
         self.create_cells()
@@ -106,6 +107,10 @@ class PlayerBoard(Board[PlayerBoardCell]):
     
     def draw_board(self, screen):
         for i, cell in enumerate(self.cells):
+            if not cell.card:
+                draw_rect(screen, (100, 100, 100), cell.rect)
+                continue
             if i % 4 == 0:
                 cell.card.isFaceUp = True
             cell.card.draw(screen, cell.rect.x,cell.rect.y)
+

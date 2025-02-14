@@ -1,6 +1,6 @@
 import pygame
 from classes.Card import Card
-from typing import TypeVar
+from typing import TypeVar, Optional
 
 
 class Cell: 
@@ -21,12 +21,13 @@ class MainBoardCell(Cell):
 class  PlayerBoardCell(Cell):
     def __init__(self, rect, row, col, action: str, card: Card, strength: int): 
         super().__init__(rect, row, col)
-        self.card = card
+        self.card: Optional[Card] = card
         self.action = action
         self.strength = strength
 
     def rotate_card(self, screen):
-        self.card.rotate(screen, self.rect.x, self.rect.y)
+        if self.card:
+            self.card.rotate(screen, self.rect.x, self.rect.y)
 
         
 CellType = TypeVar('CellType', bound=Cell)

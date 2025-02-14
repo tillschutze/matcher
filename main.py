@@ -27,6 +27,7 @@ if __name__ == '__main__':
             
             game.swapButton.handle_event(event)
             game.revealButton.handle_event(event)
+            game.resolveButton.handle_event(event)
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if game.is_swapping:
@@ -41,13 +42,20 @@ if __name__ == '__main__':
                         continue
                     else:
                         game.handle_reveal(clicked_cell)
-
+                elif game.is_resolving_card:
+                    clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                    if clicked_cell is None:
+                        continue
+                    else:
+                        game.handle_resolving_card(clicked_cell)
                 else:
                     clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
                     if clicked_cell is None:
                         continue
                     else:
                         clicked_cell.rotate_card(game.screen)
+                game.find_matching_patterns()
+
 
 
 
@@ -56,7 +64,7 @@ if __name__ == '__main__':
         screen.fill((30, 30, 30))  # A dark background.
         # --- Draw the Main Board ---
         game.draw(screen)
-        
+
         # Update the display.
         pygame.display.flip()
         # Cap the framerate.
