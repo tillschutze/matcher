@@ -63,6 +63,15 @@ class Game:
     def start_reveal(self):
         self.is_revealing = True
 
+    def handle_reveal(self, clicked_cell: PlayerBoardCell):
+        if clicked_cell.card.isFaceUp:
+            return
+        for cell in self.playerBoard.cells:
+            if cell.row == clicked_cell.row and cell.col == clicked_cell.col -1 and cell.card.isFaceUp:
+                clicked_cell.card.flip()
+                self.is_revealing = False
+            else: continue
+
     def find_matching_patterns(self):
         cells: List[PlayerBoardCell] = self.playerBoard.cells
         for cell in cells:

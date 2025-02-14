@@ -1,6 +1,6 @@
 from typing import Optional
 
-from classes.Cell import PlayerBoardCell
+from classes.Cell import PlayerBoardCell, MainBoardCell
 from classes.Colors import Color
 from classes.Game import Game
 import pygame
@@ -26,21 +26,30 @@ if __name__ == '__main__':
                 running = False
             
             game.swapButton.handle_event(event)
-            
-            if game.is_swapping and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                clicked_cell = game.board.find_clicked_cell(event.pos)
-                if clicked_cell is None:
-                    continue
-                else:  
-                    game.handle_swap(clicked_cell, screen)
+            game.revealButton.handle_event(event)
 
-            # rotate a card by 90°
-            if not game.is_swapping and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
-                if clicked_cell is None:
-                    continue
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if game.is_swapping:
+                    clicked_cell: Optional[MainBoardCell] = game.board.find_clicked_cell(event.pos)
+                    if clicked_cell is None:
+                        continue
+                    else:
+                        game.handle_swap(clicked_cell, screen)
+                elif game.is_revealing:
+                    clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                    if clicked_cell is None:
+                        continue
+                    else:
+                        game.handle_reveal(clicked_cell)
+
                 else:
-                    clicked_cell.rotate_card(game.screen)
+                    clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                    if clicked_cell is None:
+                        continue
+                    else:
+                        clicked_cell.rotate_card(game.screen)
+
+
 
                 
         # Clear the screen.
