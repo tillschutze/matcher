@@ -24,7 +24,8 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
+
+            game.endTurnButton.handle_event(event)
             game.swapButton.handle_event(event)
             game.revealButton.handle_event(event)
             game.resolveButton.handle_event(event)

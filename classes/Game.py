@@ -15,7 +15,8 @@ class Game:
         self.board: MainBoard = MainBoard(dimension, colors)
         self.deck: Deck = Deck(colors)
         self.players: List[Player] = [Player(self.deck) for _ in range(player_count)]
-        self.active_player: Player = self.players[0]
+        self.active_index = 0
+        self.endTurnButton: ActionButton = ActionButton((50, 300, 150, 50), "End Turn", self.end_turn)
         self.swapButton: ActionButton = ActionButton((50, 360, 150, 50), "Swap Stones", self.start_swapping_stones)
         self.revealButton: ActionButton = ActionButton((50, 420, 150, 50), "Reveal", self.start_reveal)
         self.resolveButton: ActionButton = ActionButton((50, 480, 150, 50), "Resolve", self.start_resolving_card)
@@ -27,7 +28,13 @@ class Game:
         self.stone_swap_state: Optional[Dict] = None
         self.card_swap_state: Optional[Dict] = None
 
-        
+    @property
+    def active_player(self):
+        return self.players[self.active_index]
+
+    def end_turn(self):
+        self.active_index = (self.active_index + 1) % len(self.players)
+
     def draw(self, screen):
         self.board.draw_board(screen)
         self.active_player.player_board.draw_board(screen)
@@ -35,6 +42,7 @@ class Game:
         self.revealButton.draw(screen)
         self.resolveButton.draw(screen)
         self.cardSwapButton.draw(screen)
+        self.endTurnButton.draw(screen)
         
     def start_swapping_stones(self):
         self.is_swapping_stones = True
