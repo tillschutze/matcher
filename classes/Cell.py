@@ -1,6 +1,7 @@
 import pygame
 from classes.Card import Card
 from typing import TypeVar, Optional
+import Constants
 
 
 class Cell: 
@@ -16,7 +17,7 @@ class MainBoardCell(Cell):
     def __init__(self, rect, color, row, col): 
         super().__init__(rect, row, col)
         self.color = color
-        self.highlight_color = (0, 0, 0)
+        self.highlight_color = Constants.OUTLINE_COLOR
 
     def __repr__(self):
         return f"Cell({self.row},{self.col} color={self.color})"

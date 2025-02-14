@@ -5,12 +5,13 @@ from utils.PygameUtils import draw_rect
 import random
 import numpy as np
 import pygame
+import Constants
 from typing import List, Optional, Generic, TypeAlias
 
 Pattern: TypeAlias = List[List[Color]]
 
 class Board(Generic[CellType]):
-    def __init__(self, dimension, origin=(50, 50), cell_size=50):
+    def __init__(self, dimension, origin, cell_size):
         self.dimension: int = dimension
         self.rows: int = dimension
         self.cols: int = dimension
@@ -19,7 +20,7 @@ class Board(Generic[CellType]):
         self.cells: List[CellType] = []
         self.board = None
         self.patterns: List[Pattern] = []
-        self.board = np.empty((4, 4), dtype=object)
+        self.board = np.empty((dimension, dimension), dtype=object)
         self.create_board()
        
     def create_board(self):
@@ -52,7 +53,7 @@ class Board(Generic[CellType]):
     
 
 class MainBoard(Board[MainBoardCell]):
-    def __init__(self, dimension, colors: List[Color], origin=(50, 50), cell_size=50):
+    def __init__(self, dimension, colors: List[Color], origin=Constants.MAIN_BOARD_ORIGIN, cell_size=Constants.MAIN_BOARD_CELL_SIZE):
         self.colors = colors
         self.stones = []
         super().__init__(dimension, origin, cell_size)
@@ -72,7 +73,7 @@ class MainBoard(Board[MainBoardCell]):
     def draw_board(self, screen):
         for cell in self.cells:
             draw_rect(screen, cell.color, cell.rect)
-            draw_rect(screen, cell.highlight_color, cell.rect, 3)
+            draw_rect(screen, cell.highlight_color, cell.rect, 2)
 
     def generate_pattern_list(self):
         patterns: List[Pattern] = []
@@ -92,10 +93,10 @@ class MainBoard(Board[MainBoardCell]):
         self.patterns = patterns
 
     def toggle_highlight(self, cell: MainBoardCell, highlight: bool):
-        cell.highlight_color = (255, 0, 255) if highlight else (0, 0, 0) 
+        cell.highlight_color = Constants.HIGHLIGHT_COLOR if highlight else Constants.OUTLINE_COLOR
         
 class PlayerBoard(Board[PlayerBoardCell]):
-    def __init__(self, dimension, deck: Deck, origin=(470, 50), cell_size=80):
+    def __init__(self, dimension, deck: Deck, origin=Constants.PLAYER_BOARD_ORIGIN, cell_size=Constants.PLAYER_BOARD_CELL_SIZE):
         self.deck = deck
         super().__init__(dimension, origin, cell_size)
 
@@ -108,9 +109,9 @@ class PlayerBoard(Board[PlayerBoardCell]):
     def draw_board(self, screen):
         for i, cell in enumerate(self.cells):
             if not cell.card:
-                draw_rect(screen, (100, 100, 100), cell.rect)
+                draw_rect(screen, Constants.EMPTY_CELL_COLOR, cell.rect)
                 continue
-            if i % 4 == 0:
+            if i % self.dimension == 0:
                 cell.card.isFaceUp = True
             cell.card.draw(screen, cell.rect.x,cell.rect.y)
 

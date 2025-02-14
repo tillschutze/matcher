@@ -1,13 +1,12 @@
 from classes.Colors import Color, COLOR_NAMES
 from typing import List
 from utils.PygameUtils import draw_rect
+import Constants
 
 class Card: 
-    def __init__(self, pattern: List[List[Color]],  points: int = 2, orientation: str = "base", isFaceUp: bool = False, width: int = 40, height: int = 40):
+    def __init__(self, pattern: List[List[Color]],  isFaceUp: bool = False, width: int = Constants.CARD_WIDTH, height: int = Constants.CARD_WIDTH):
         self.pattern: List[List[Color]] = pattern
         self.isFaceUp = isFaceUp
-        self.points = points
-        self.orientation = orientation
         self.width = width
         self.height = height
         self.highlight: bool = False
@@ -17,13 +16,13 @@ class Card:
       
     def draw(self, screen, x, y):
         if self.isFaceUp:
-            for i in range(2):
-                for j in range(2):
+            for i in range(Constants.CARD_DIMENSIONS):
+                for j in range(Constants.CARD_DIMENSIONS):
                     draw_rect(screen, COLOR_NAMES[self.pattern[i][j]], (x + j * self.width, y + i * self.height, self.width, self.height))
-                    draw_rect(screen, (255, 0, 255) if self.highlight else  (0, 0, 0), (x + j * self.width, y + i * self.height, self.width, self.height), 1)
+                    draw_rect(screen, Constants.HIGHLIGHT_COLOR if self.highlight else  Constants.OUTLINE_COLOR, (x + j * self.width, y + i * self.height, self.width, self.height), Constants.CARD_BORDER_WIDTH)
         else:
-            draw_rect(screen, (255, 0, 255), (x, y, self.width * 2, self.height * 2))
-        draw_rect(screen, (255, 0, 255) if self.highlight else  (0, 0, 0), (x, y, self.width * 2, self.height * 2), 3)
+            draw_rect(screen, Constants.HIGHLIGHT_COLOR, (x, y, self.width * Constants.CARD_DIMENSIONS, self.height * Constants.CARD_DIMENSIONS))
+        draw_rect(screen, Constants.HIGHLIGHT_COLOR if self.highlight else  Constants.OUTLINE_COLOR, (x, y, self.width * Constants.CARD_DIMENSIONS, self.height * Constants.CARD_DIMENSIONS), Constants.BORDER_WIDTH)
 
     def rotate(self, screen, x, y):
         rotated_pattern: List[List[Color]] = [[self.pattern[1][0], self.pattern[0][0]], [self.pattern[1][1], self.pattern[0][1]]]

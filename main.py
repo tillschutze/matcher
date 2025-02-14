@@ -1,5 +1,5 @@
 from typing import Optional
-
+import Constants
 from classes.Cell import PlayerBoardCell, MainBoardCell
 from classes.Colors import Color
 from classes.Game import Game
@@ -9,12 +9,12 @@ import pygame
 if __name__ == '__main__':
     # Initialize Pygame.
     pygame.init()
-    screen_width, screen_height = 850, 400
+    screen_width, screen_height = Constants.GAME_BOARD_WIDTH, Constants.GAME_BOARD_HEIGHT
     screen: pygame.Surface = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Board Game Prototype")
     
     colors = [Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW]
-    game = Game(screen, colors, 4)
+    game = Game(screen, colors, Constants.DIMENSIONS)
     # Set up a clock to control the framerate.
     clock = pygame.time.Clock()
 
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
                 
         # Clear the screen.
-        screen.fill((30, 30, 30))  # A dark background.
+        screen.fill(Constants.BACKGROUND_COLOR)  # A dark background.
         # --- Draw the Main Board ---
         game.draw(screen)
         game.find_matching_patterns()
