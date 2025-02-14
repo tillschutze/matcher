@@ -15,13 +15,13 @@ class Game:
         self.deck: Deck = Deck(colors)
         self.players: List[Player] = [Player(self.deck) for _ in range(player_count)]
         self.active_player: Player = self.players[0]
-        self.swapButton: ActionButton = ActionButton((50, 520, 150, 50), "Swap", self.start_swap)
+        self.swapButton: ActionButton = ActionButton((50, 520, 150, 50), "Swap", self.start_swapping_stones)
         self.revealButton: ActionButton = ActionButton((50, 400, 150, 50), "Reveal", self.start_reveal)
         self.resolveButton: ActionButton = ActionButton((50, 460, 150, 50), "Resolve", self.start_resolving_card)
-        self.is_swapping: bool = False
+        self.is_swapping_stones: bool = False
         self.is_revealing: bool = False
         self.is_resolving_card: bool = False
-        self.swapState: Optional[Dict] = None
+        self.stone_swap_state: Optional[Dict] = None
 
         
     def draw(self, screen):
@@ -31,40 +31,38 @@ class Game:
         self.revealButton.draw(screen)
         self.resolveButton.draw(screen)
         
-    def start_swap(self):
+    def start_swapping_stones(self):
         print("Swapping!")
-        self.is_swapping = True
-        self.swapState = None
+        self.is_swapping_stones = True
+        self.stone_swap_state = None
         
-    def handle_swap(self, clicked_cell: Cell, screen):
-        if self.swapState is None:
-            # First click: choose the source cell.
-            self.swapState = {"source": clicked_cell, "adjacent": []}
-            # Find all orthogonally adjacent cells.
+    def handle_swapping_stones(self, clicked_cell: Cell):
+        if self.stone_swap_state is None:
+            self.stone_swap_state = {"source": clicked_cell, "adjacent": []}
             for cell in self.board.cells:
                 if cell == clicked_cell:
                     continue
-                # Check if the cell is directly to the left/right or above/below.
                 if (cell.row == clicked_cell.row and abs(cell.col - clicked_cell.col) == 1) or (cell.col == clicked_cell.col and abs(cell.row - clicked_cell.row) == 1):
-                    self.swapState["adjacent"].append(cell)
+                    self.stone_swap_state["adjacent"].append(cell)
                     self.board.toggle_highlight(cell, True)
         
         else:
-            # Second click: if clicked cell is one of the highlighted adjacent cells, perform the swap.
-            if clicked_cell in self.swapState["adjacent"]:
-                source = self.swapState["source"]
+            if clicked_cell == self.stone_swap_state["source"]:
+                for cell in self.stone_swap_state["adjacent"]:
+                    self.board.toggle_highlight(cell, False)
+                self.stone_swap_state = None
+                return
+            if clicked_cell in self.stone_swap_state["adjacent"]:
+                source = self.stone_swap_state["source"]
                 target = clicked_cell
                 # Swap their values.
                 source.color, target.color = target.color, source.color
-                print(f"Swapped cell at ({source.row}, {source.col}) with cell at ({target.row}, {target.col}).")
-                for cell in self.swapState["adjacent"]:
+                for cell in self.stone_swap_state["adjacent"]:
                     self.board.toggle_highlight(cell, False)
                 self.board.generate_pattern_list()
-            else:
-                print("Invalid target cell. Swap cancelled.")
-            # Reset swap mode regardless of whether swap was successful.
-            self.is_swapping = False
-            self.swapState = None
+                self.is_swapping_stones = False
+                self.stone_swap_state = None
+
 
     def start_reveal(self):
         self.is_revealing = True
