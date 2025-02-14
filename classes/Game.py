@@ -5,12 +5,16 @@ from classes.Cell import Cell, PlayerBoardCell
 from typing import Dict, Optional, List
 import pygame
 
+from classes.Player import Player
+
+
 class Game:
-    def __init__(self, screen, colors, dimension):
+    def __init__(self, screen, colors, dimension, player_count = 2):
         self.screen: pygame.Surface = screen
         self.board: MainBoard = MainBoard(dimension, colors)
         self.deck: Deck = Deck(colors)
-        self.playerBoard: PlayerBoard = PlayerBoard(dimension, self.deck)
+        self.players: List[Player] = [Player(self.deck) for _ in range(player_count)]
+        self.active_player: Player = self.players[0]
         self.swapButton: ActionButton = ActionButton((50, 520, 150, 50), "Swap", self.start_swap)
         self.revealButton: ActionButton = ActionButton((50, 400, 150, 50), "Reveal", self.start_reveal)
         self.resolveButton: ActionButton = ActionButton((50, 460, 150, 50), "Resolve", self.start_resolving_card)
@@ -22,7 +26,7 @@ class Game:
         
     def draw(self, screen):
         self.board.draw_board(screen)
-        self.playerBoard.draw_board(screen)
+        self.active_player.player_board.draw_board(screen)
         self.swapButton.draw(screen)
         self.revealButton.draw(screen)
         self.resolveButton.draw(screen)
@@ -68,7 +72,7 @@ class Game:
     def handle_reveal(self, clicked_cell: PlayerBoardCell):
         if not clicked_cell.card or clicked_cell.card.isFaceUp:
             return
-        for cell in self.playerBoard.cells:
+        for cell in self.active_player.player_board.cells:
             if cell.row == clicked_cell.row and cell.col == clicked_cell.col -1 and (not cell.card or cell.card.isFaceUp):
                 clicked_cell.card.flip()
                 self.is_revealing = False
@@ -84,12 +88,12 @@ class Game:
             self.is_resolving_card = False
 
     def find_matching_patterns(self):
-        cells: List[PlayerBoardCell] = self.playerBoard.cells
+        cells: List[PlayerBoardCell] = self.active_player.player_board.cells
         for cell in cells:
             if not cell.card or not cell.card.isFaceUp:
                 continue
 
-            if cell.col > 0 and  self.playerBoard.board[cell.row][cell.col -1].card:
+            if cell.col > 0 and  self.active_player.player_board.board[cell.row][cell.col -1].card:
                 print("neighbor has a card still")
                 continue
 

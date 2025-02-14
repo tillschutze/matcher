@@ -37,19 +37,19 @@ if __name__ == '__main__':
                     else:
                         game.handle_swap(clicked_cell, screen)
                 elif game.is_revealing:
-                    clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                    clicked_cell: Optional[PlayerBoardCell] = game.active_player.player_board.find_clicked_cell(event.pos)
                     if clicked_cell is None:
                         continue
                     else:
                         game.handle_reveal(clicked_cell)
                 elif game.is_resolving_card:
-                    clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                    clicked_cell: Optional[PlayerBoardCell] = game.active_player.player_board.find_clicked_cell(event.pos)
                     if clicked_cell is None:
                         continue
                     else:
                         game.handle_resolving_card(clicked_cell)
                 else:
-                    clicked_cell: Optional[PlayerBoardCell] = game.playerBoard.find_clicked_cell(event.pos)
+                    clicked_cell: Optional[PlayerBoardCell] = game.active_player.player_board.find_clicked_cell(event.pos)
                     if clicked_cell is None:
                         continue
                     else:
