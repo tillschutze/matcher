@@ -89,9 +89,8 @@ class MainBoard(Board[MainBoardCell]):
                         pattern[0][1] = rgb_to_color.get(cell.color, None).value
                 patterns.append(pattern)
         self.patterns = patterns
-        print(len(self.patterns), self.patterns)
 
-    def toggle_highlight(self, screen, cell: MainBoardCell, highlight: bool):
+    def toggle_highlight(self, cell: MainBoardCell, highlight: bool):
         cell.highlight_color = (255, 0, 255) if highlight else (0, 0, 0) 
         
 class PlayerBoard(Board[PlayerBoardCell]):

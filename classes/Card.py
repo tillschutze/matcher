@@ -10,6 +10,7 @@ class Card:
         self.orientation = orientation
         self.width = width
         self.height = height
+        self.highlight: bool = False
         
     def __repr__(self):
         return f"Card(pattern={COLOR_NAMES[self.pattern[0][0]], COLOR_NAMES[self.pattern[0][1]], COLOR_NAMES[self.pattern[1][0]], COLOR_NAMES[self.pattern[1][1]]}, isFaceUp={self.isFaceUp})"
@@ -19,10 +20,10 @@ class Card:
             for i in range(2):
                 for j in range(2):
                     draw_rect(screen, COLOR_NAMES[self.pattern[i][j]], (x + j * self.width, y + i * self.height, self.width, self.height))
-                    draw_rect(screen, (0, 0, 0), (x + j * self.width, y + i * self.height, self.width, self.height), 1)
+                    draw_rect(screen, (255, 0, 255) if self.highlight else  (0, 0, 0), (x + j * self.width, y + i * self.height, self.width, self.height), 1)
         else:
             draw_rect(screen, (255, 0, 255), (x, y, self.width * 2, self.height * 2))
-        draw_rect(screen, (0, 0, 0), (x, y, self.width * 2, self.height * 2), 3)
+        draw_rect(screen, (255, 0, 255) if self.highlight else  (0, 0, 0), (x, y, self.width * 2, self.height * 2), 3)
 
     def rotate(self, screen, x, y):
         rotated_pattern: List[List[Color]] = [[self.pattern[1][0], self.pattern[0][0]], [self.pattern[1][1], self.pattern[0][1]]]
