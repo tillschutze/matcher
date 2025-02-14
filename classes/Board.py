@@ -95,7 +95,7 @@ class MainBoard(Board[MainBoardCell]):
         cell.highlight_color = (255, 0, 255) if highlight else (0, 0, 0) 
         
 class PlayerBoard(Board[PlayerBoardCell]):
-    def __init__(self, dimension, deck: Deck, origin=(300, 50), cell_size=80):
+    def __init__(self, dimension, deck: Deck, origin=(470, 50), cell_size=80):
         self.deck = deck
         super().__init__(dimension, origin, cell_size)
 

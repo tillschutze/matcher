@@ -9,7 +9,7 @@ import pygame
 if __name__ == '__main__':
     # Initialize Pygame.
     pygame.init()
-    screen_width, screen_height = 800, 600
+    screen_width, screen_height = 850, 400
     screen: pygame.Surface = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Board Game Prototype")
     
@@ -62,7 +62,6 @@ if __name__ == '__main__':
                         continue
                     else:
                         clicked_cell.rotate_card(game.screen)
-                game.find_matching_patterns()
 
 
 
@@ -72,6 +71,7 @@ if __name__ == '__main__':
         screen.fill((30, 30, 30))  # A dark background.
         # --- Draw the Main Board ---
         game.draw(screen)
+        game.find_matching_patterns()
 
         # Update the display.
         pygame.display.flip()
